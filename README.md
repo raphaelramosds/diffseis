@@ -13,7 +13,26 @@ Seismic data processing involves techniques to deal with undesired effects that 
 
 
 ## Testing Code on Demultiples
-Download [Pretrained Model (model_test.pt)](https://osf.io/n2bs9/?view_only=77d7313d3f2d44e18dc0ee4005c3bfa4). Run inference on:
+
+Download [Pretrained Model (model_test.pt)](https://osf.io/n2bs9/?view_only=77d7313d3f2d44e18dc0ee4005c3bfa4).
+
+Install Python modules
+
+```shell
+# Create virtual environment
+python -m venv /home/${USER}/Venvs/diffseis
+
+# Create temporary directory to store installation artifacts
+export TMPDIR=/home/$USER/tmp_dir
+
+# Install PyTorch modules separately to avoid OEM 
+pip install --extra-index-url https://download.pytorch.org/whl/cu121 torch torchvision torchaudio
+
+# Install other modules
+pip install -r requirements.txt
+```
+
+Run inference on:
 ```bash
 visualization.ipynb
 ```
