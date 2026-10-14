@@ -35,6 +35,21 @@ icon:
 
 appdir: build
 	mkdir -p $(APPDIR)/usr/bin
+	printf '%s\n' \
+		'#!/bin/sh' \
+		'DIR=$$(CDPATH= cd -- "$$(dirname -- "$$0")" && pwd)' \
+		'exec "$$DIR/usr/bin/$(APP_NAME)" "$$@"' \
+		> $(APPDIR)/AppRun
+	printf '%s\n' \
+		'[Desktop Entry]' \
+		'Name=DiffSeis SU Viewer' \
+		'Comment=View Seismic Unix files' \
+		'Exec=$(APP_NAME)' \
+		'Icon=$(APP_NAME)' \
+		'Terminal=false' \
+		'Type=Application' \
+		'Categories=Science;' \
+		> $(APPDIR)/$(APP_NAME).desktop
 	cp $(DIST_BINARY) $(APPDIR)/usr/bin/$(APP_NAME)
 	chmod +x $(APPDIR)/AppRun $(APPDIR)/usr/bin/$(APP_NAME)
 	$(MAKE) icon
