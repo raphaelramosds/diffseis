@@ -26,3 +26,9 @@ results*/
 *.ckpt
 arquivos/
 
+# viewsu deployment directories and artifacts
+dist
+build
+AppDir
+*AppImage
+appimagetool
