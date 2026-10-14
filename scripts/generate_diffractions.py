@@ -15,6 +15,7 @@ def ricker_wavelet(length=11, f0=25.0, dt=0.004):
     t = np.arange(-(length//2), length//2 + 1) * dt
     y = (1.0 - 2.0 * (np.pi**2) * (f0**2) * (t**2)) * np.exp(-(np.pi**2) * (f0**2) * (t**2))
     return y.astype(np.float32)
+    
 
 wavelet = ricker_wavelet()
 half_w = len(wavelet) // 2
@@ -74,7 +75,18 @@ for i in range(num_samples_to_generate):
         stream_data.append(trace_data)
 
     # Save pairs
-    stream_label.write(f'data/labels/{i}.su', format='SU')
-    stream_data.write(f'data/data/{i}.su', format='SU')
+    stream_label.write(
+        f'data/labels/{i}.su',
+        format='SU',
+        # '<' for little endian
+        # Reference: https://docs.obspy.org/packages/autogen/obspy.io.segy.core._write_su.html#obspy.io.segy.core._write_su
+        byteorder='<'
+    )
+    stream_data.write(
+        f'data/data/{i}.su',
+        format='SU',
+        # Reference: https://docs.obspy.org/packages/autogen/obspy.io.segy.core._write_su.html#obspy.io.segy.core._write_su
+        byteorder='<'
+    )
 
 print("Geração sintética concluída! 100 pares gerados em data/labels/ e data/data/")

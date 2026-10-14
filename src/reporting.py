@@ -112,7 +112,13 @@ class DiffSeisReporter:
             tr = Trace(data=data[tr_idx].astype(np.float32))
             tr.stats.delta = self.dt
             stream.append(tr)
-        stream.write(out_path, format='SU')
+        
+        stream.write(
+            out_path,
+            format='SU',
+            # Reference: https://docs.obspy.org/packages/autogen/obspy.io.segy.core._write_su.html#obspy.io.segy.core._write_su
+            byteorder='<'
+        )
 
     def save_state(self, input_data, pred_data, metrics: dict, prefix: str = ""):
         """Salva de forma unificada os 3 arquivos .su e o arquivo .json de métricas."""
